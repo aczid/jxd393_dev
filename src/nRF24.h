@@ -1,3 +1,6 @@
+#ifndef NRF24_H
+#define NRF24_H
+
 typedef enum {
   SPI_FLAG_BSY    = (uint8_t)0x80, // Busy flag
   SPI_FLAG_OVR    = (uint8_t)0x40, // Overrun flag
@@ -97,3 +100,5 @@ uint8_t nRF24_TXPacket(uint8_t * pBuf, uint8_t TX_PAYLOAD);
 uint8_t nRF24_RXPacket(uint8_t* pBuf);
 void nRF24_PowerDown(void);
 void nRF24_Wake(void);
+
+#endif // NRF24_H

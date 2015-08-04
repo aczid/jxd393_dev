@@ -1,5 +1,8 @@
 // Adapted from https://github.com/vdudouyt/sdcc-examples-stm8/
 
+#ifndef STM8S005K6
+#define STM8S005K6
+
 /* GPIO */
 #define PA_ODR *(unsigned char*)0x5000
 #define PA_IDR *(unsigned char*)0x5001
@@ -385,3 +388,5 @@
 #define FLASH_vect    24
 
 // TODO option bytes
+
+#endif // STM8S005K6
