@@ -85,7 +85,7 @@
 #define CLK_SWCR	*(unsigned char*)0x50C5
 #define CLK_CKDIVR	*(unsigned char*)0x50C6
 #define CLK_PCKENR1	*(unsigned char*)0x50C7
-#define CLK_CSSR 	*(unsigned char*)0x50C8
+#define CLK_CSSR	*(unsigned char*)0x50C8
 #define CLK_CCOR	*(unsigned char*)0x50C9
 #define CLK_PCKENR2	*(unsigned char*)0x50CA
 
