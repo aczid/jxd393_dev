@@ -1,3 +1,5 @@
+// Adapted from https://github.com/vdudouyt/sdcc-examples-stm8/
+
 /* GPIO */
 #define PA_ODR *(unsigned char*)0x5000
 #define PA_IDR *(unsigned char*)0x5001
@@ -357,4 +359,29 @@
 #define DM_CSR2   *(unsigned char*)0x7F99
 #define DM_ENFCTR *(unsigned char*)0x7F9A
 
-// TODO interrupt vectors, option bytes
+/* Interrupt vectors */
+#define TLI_vect   0
+#define AWU_vect   1
+#define CLK_vect   2
+#define EXTI0_vect 3
+#define EXTI1_vect 4
+#define EXTI2_vect 5
+#define EXTI3_vect 6
+#define EXTI4_vect 7
+
+#define SPI_vect     10
+#define TIM1OF_vect  11
+#define TIM1CAP_vect 12
+#define TIM2OF_vect  13
+#define TIM2CAP_vect 14
+#define TIM3OF_vect  15
+#define TIM3CAP_vect 16
+
+#define I2C_vect      19
+#define UART2_TX_vect 20
+#define UART2_RX_vect 21
+#define ADC_vect      22
+#define TIM4OF_vect   23
+#define FLASH_vect    24
+
+// TODO option bytes
