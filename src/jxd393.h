@@ -1,4 +1,4 @@
-#include "stm8s005k6.h"
+#include "stm8s_conf.h"
 #include <stdint.h>
 
 #ifndef JXD393_H

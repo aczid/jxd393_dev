@@ -22,12 +22,12 @@ typedef enum {
 /*#define CSN_H() PB_ODR_bit.ODR4 = 1;*/
 
 // Chip Enable Activates RX or TX mode
-#define CE_L() PB_ODR &= ~0x04;
-#define CE_H() PB_ODR |= 0x04;
+#define CE_L() GPIOB->ODR &= ~0x04;
+#define CE_H() GPIOB->ODR |= 0x04;
 
 // SPI Chip Select
-#define CSN_L() PC_ODR &= ~0x10;
-#define CSN_H() PC_ODR |= 0x10;
+#define CSN_L() GPIOC->ODR &= ~0x10;
+#define CSN_H() GPIOC->ODR |= 0x10;
 
 // nRF24L0 commands
 #define nRF24_CMD_RREG             0x00  // R_REGISTER -> Read command and status registers

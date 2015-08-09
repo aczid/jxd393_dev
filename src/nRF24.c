@@ -2,7 +2,8 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "stm8s005k6.h"
+/*#include "stm8s005k6.h"*/
+#include "stm8s_conf.h"
 #include "nRF24.h"
 
 uint8_t nRF24_RX_addr[nRF24_RX_ADDR_WIDTH] = {'W','o','l','k','T'};
@@ -10,17 +11,17 @@ uint8_t nRF24_TX_addr[nRF24_TX_ADDR_WIDTH] = {'W','o','l','k','T'};
 
 // Check the specified SPI flag
 int SPI_GetFlagStatus(SPI_FLAG_TypeDef flag) {
-    return (SPI_SR & (uint8_t)flag);
+    return (SPI->SR & (uint8_t)flag);
 }
 
 // Transmit data byte through the SPI
 void SPI_SendData(uint8_t data) {
-    SPI_DR = data;
+    SPI->DR = data;
 }
 
 // Return most recent received data by the SPI
 uint8_t SPI_ReceiveData(void) {
-    return (uint8_t)SPI_DR;
+    return (uint8_t)SPI->DR;
 }
 
 // GPIO and SPI initialization
@@ -39,44 +40,44 @@ void nRF24_init() {
     /*PB_CR2 |= 0x78; // Set 10MHz output speed for PB3..PB6 pins*/
     // Set PB1, PB2 as output
     // CE
-    PB_DDR |= 0x06;
-    PB_CR1 |= 0x06;
-    PB_CR2 |= 0x06;
-    PB_ODR &= ~(0x2); // GND
+    GPIOB->DDR |= 0x06;
+    GPIOB->CR1 |= 0x06;
+    GPIOB->CR2 |= 0x06;
+    GPIOB->ODR &= ~(0x2); // GND
     // Set PC4..PC6 as output
     // MOSI, SCK, CSN
-    PC_DDR |= 0x70;
-    PC_CR1 |= 0x70;
-    PC_CR2 |= 0x70;
+    GPIOC->DDR |= 0x70;
+    GPIOC->CR1 |= 0x70;
+    GPIOC->CR2 |= 0x70;
 
     //PB_CR2 &= ~(0x78); // Set 2MHz output speed for PB3..PB6 pins
 
     // MISO pin set as input with pull-up
     /*PB_DDR_bit.DDR7 = 0; // Set PB7 as input*/
     // Set PC7 as input
-    PC_DDR &= ~0x80;
+    GPIOC->DDR &= ~0x80;
     /*PB_CR1_bit.C17  = 1; // Configure PB7 as input with pull-up*/
     // Configure PC7 as input with pull-up
-    PC_CR1 |= 0x80;
+    GPIOC->CR1 |= 0x80;
     /*PB_CR2_bit.C27  = 0; // Disable external interrupt for PB7*/
     // Disable external interrupt for PC7
-    PC_CR2 &= ~0x80;
+    GPIOC->CR2 &= ~0x80;
 
     // IRQ pin set as input with pull-up
     /*PB_DDR_bit.DDR2 = 0; // Set PB2 as input*/
     // Set PC1 as input
-    PB_DDR &= ~0x02;
+    GPIOB->DDR &= ~0x02;
     /*PB_CR1_bit.C12  = 1; // Configure PB2 as input with pull-up*/
     // Configure PC1 as input with pull-up
-    PB_CR1 |= 0x02;
+    GPIOB->CR1 |= 0x02;
     /*PB_CR2_bit.C22  = 0; // Disable external interrupt for PB2*/
     // Disable external interrupt for PC1
-    PB_CR2 &= ~0x02;
+    GPIOB->CR2 &= ~0x02;
 
     // Configure SPI
     /*CLK_PCKENR1_bit.PCKEN14 = 1; // Enable SPI peripherial (PCKEN14)*/
     // Enable SPI (PCKEN11)
-    CLK_PCKENR1 |= 0x02;
+    CLK->PCKENR1 |= 0x02;
 
     /*
     SPI_CR1_bit.BR       = 0; // Baud = f/2 (1MHz at 2MHz CPU)
@@ -86,7 +87,7 @@ void nRF24_init() {
     SPI_CR1_bit.MSTR     = 1; // Master configuration
     SPI_CR1_bit.SPE      = 0; // Peripherial enabled
     */
-    SPI_CR1 = 0x04; // SPI: MSB first, Baud=f/2, Master, CPOL=low, CPHA=1st edge
+    SPI->CR1 = 0x04; // SPI: MSB first, Baud=f/2, Master, CPOL=low, CPHA=1st edge
     //SPI_CR1 = 0x24; // SPI: MSB first, Baud=f/32, Master, CPOL=low, CPHA=1st edge
 
     /*
@@ -96,10 +97,10 @@ void nRF24_init() {
     SPI_CR2_bit.SSI    = 1; // Master mode
     SPI_CR2_bit.SSM    = 1; // Software slave management enabled
     */
-    SPI_CR2 = 0x03; // SPI: 2-line mode, full duplex, SSM on (master mode)
+    SPI->CR2 = 0x03; // SPI: 2-line mode, full duplex, SSM on (master mode)
 
     /*SPI_CR1_bit.SPE = 1; // SPI peripherial enabled*/
-    SPI_CR1 |= 0x40;
+    SPI->CR1 |= 0x40;
 
 
     CSN_H();
