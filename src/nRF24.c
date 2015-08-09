@@ -9,21 +9,6 @@
 uint8_t nRF24_RX_addr[nRF24_RX_ADDR_WIDTH] = {'W','o','l','k','T'};
 uint8_t nRF24_TX_addr[nRF24_TX_ADDR_WIDTH] = {'W','o','l','k','T'};
 
-// Check the specified SPI flag
-int SPI_GetFlagStatus(SPI_FLAG_TypeDef flag) {
-    return (SPI->SR & (uint8_t)flag);
-}
-
-// Transmit data byte through the SPI
-void SPI_SendData(uint8_t data) {
-    SPI->DR = data;
-}
-
-// Return most recent received data by the SPI
-uint8_t SPI_ReceiveData(void) {
-    return (uint8_t)SPI->DR;
-}
-
 // GPIO and SPI initialization
 void nRF24_init() {
     // GND  --> PB1

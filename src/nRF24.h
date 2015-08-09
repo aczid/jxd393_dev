@@ -1,16 +1,6 @@
 #ifndef NRF24_H
 #define NRF24_H
 
-typedef enum {
-  SPI_FLAG_BSY    = (uint8_t)0x80, // Busy flag
-  SPI_FLAG_OVR    = (uint8_t)0x40, // Overrun flag
-  SPI_FLAG_MODF   = (uint8_t)0x20, // Mode fault
-  SPI_FLAG_WKUP   = (uint8_t)0x08, // Wake-up flag
-  SPI_FLAG_TXE    = (uint8_t)0x02, // Transmit buffer empty
-  SPI_FLAG_RXNE   = (uint8_t)0x01  // Receive buffer empty
-} SPI_FLAG_TypeDef;
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*// Chip Enable Activates RX or TX mode*/
