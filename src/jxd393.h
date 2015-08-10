@@ -1,8 +1,9 @@
+#ifndef _JXD393_H
+#define _JXD393_H
+
 #include "stm8s_conf.h"
 #include <stdint.h>
 
-#ifndef JXD393_H
-#define JXD393_H
 void leds_enable();
 void leds_on();
 void leds_off();
@@ -16,4 +17,4 @@ void motor1_set_speed(uint8_t speed);
 /*void gyro_readout();*/
 /*void radio_readout();*/
 
-#endif
+#endif // _JXD393_H

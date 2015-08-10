@@ -8,7 +8,7 @@ STM8LIBDIR = $(SRCDIR)/stm8s_stdlib
 
 C_FILES    = $(shell find $(SRCDIR) -name "*.c" \! -path "$(STM8LIBDIR)*")
 ST_C_FILES = $(shell find $(STM8LIBDIR) -name "*.c")
-CFLAGS     = -mstm8 -DSTM8S005 -Wa,-l -I $(SRCDIR) -I $(STM8LIBDIR)
+CFLAGS     = -mstm8 -Wa,-l -I $(SRCDIR) -I $(STM8LIBDIR)
 LDFLAGS    = -mstm8 -lstm8 
 OBJECTS    = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(C_FILES))
 ST_OBJECTS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(ST_C_FILES))
@@ -70,5 +70,5 @@ read_option_bytes:
 
 print_debug_buffer:
 	$(FLASHER) -s ram -r $(RAM_BIN)
-	xxd -s 0x`strings -a -t x ram.bin | grep DBG -A 1 | tail -n1 | cut -d' ' -f7` -l 128 $(RAM_BIN)
+	@xxd -l 64 -s +`grep -bao DBG $(RAM_BIN) | cut -d':' -f 1` -s+4 $(RAM_BIN)
 	@rm $(RAM_BIN)
