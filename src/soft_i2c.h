@@ -7,14 +7,14 @@
 #include <stdint.h>
 
 // set to output and set to low
-#define i2c_sda_lo() (GPIOA->ODR = GPIOA->IDR & ~0x04); (GPIOA->DDR |= 0x04)
-#define i2c_sclk_lo() (GPIOA->ODR = GPIOA->IDR & ~0x02); (GPIOA->DDR |= 0x02)
+#define i2c_sda_lo() (GPIOA->DDR |= 0x04); (GPIOA->ODR = GPIOA->IDR & ~0x04)
+#define i2c_sclk_lo() (GPIOA->DDR |= 0x02); (GPIOA->ODR = GPIOA->IDR & ~0x02)
 
 // set to input (pull up enabled)
 #define i2c_sda_hi() (GPIOA->ODR = GPIOA->DDR & ~0x04)
 #define i2c_sclk_hi() (GPIOA->ODR = GPIOA->DDR & ~0x02)
 
-#define i2c_bit_delay() _delay_us(320)
+#define i2c_bit_delay() _delay_us(160)
 
 void soft_i2c_init(void);
 void soft_i2c_start(void);

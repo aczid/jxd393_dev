@@ -71,4 +71,4 @@ read_option_bytes:
 print_debug_buffer:
 	$(FLASHER) -s ram -r $(RAM_BIN)
 	@xxd -l 64 -s +`grep -bao DBG $(RAM_BIN) | cut -d':' -f 1` -s+4 $(RAM_BIN)
-	@rm $(RAM_BIN)
+	#@rm $(RAM_BIN)
