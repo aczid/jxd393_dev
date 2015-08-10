@@ -9,4 +9,12 @@ This includes the [STM8S standard peripheral driver](http://www.st.com/web/catal
 Working/tested features:
  * LEDs
  * SPI
+ * I2C via bitbanging over PORTA pin 2/3
+
+To do:
+ * MPU6050 driver
+ * PWM for motors (using stdlib)
+ * PID controller to stabilize
+ * BK2421 driver
+ * Radio control
 
