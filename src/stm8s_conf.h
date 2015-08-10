@@ -1,7 +1,6 @@
 #ifndef _STM8S_CONF_H
 #define _STM8S_CONF_H
 
-#define STM8S005
 #include "stm8s.h"
 
 #ifdef  USE_FULL_ASSERT
@@ -13,7 +12,5 @@ void assert_failed(u8* file, u32 line);
 
 #include "stm8s_stdlib/stm8s_gpio.h"
 #include "stm8s_stdlib/stm8s_spi.h"
-
-#define F_CPU 16000000
 
 #endif // _STM8S_CONF_H

@@ -8,7 +8,7 @@ STM8LIBDIR = $(SRCDIR)/stm8s_stdlib
 
 C_FILES    = $(shell find $(SRCDIR) -name "*.c" \! -path "$(STM8LIBDIR)*")
 ST_C_FILES = $(shell find $(STM8LIBDIR) -name "*.c")
-CFLAGS     = -mstm8 -Wa,-l -I $(SRCDIR) -I $(STM8LIBDIR)
+CFLAGS     = -mstm8 -Wa,-l -I $(SRCDIR) -I $(STM8LIBDIR) -DSTM8S005 -DF_CPU=16000000 --debug --std-c99
 LDFLAGS    = -mstm8 -lstm8 
 OBJECTS    = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(C_FILES))
 ST_OBJECTS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(ST_C_FILES))

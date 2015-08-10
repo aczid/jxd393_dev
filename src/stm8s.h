@@ -238,8 +238,11 @@ typedef uint32_t  u32;
 typedef uint16_t u16;
 typedef uint8_t  u8;
 
-
+#ifndef _SDCC_
 typedef enum {FALSE = 0, TRUE = !FALSE} bool;
+#else
+#include <stdbool.h>
+#endif
 
 typedef enum {RESET = 0, SET = !RESET} FlagStatus, ITStatus, BitStatus, BitAction;
 

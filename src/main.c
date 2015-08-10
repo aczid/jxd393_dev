@@ -18,6 +18,9 @@ int main() {
     ret = mpu6050_init();
 
     leds_enable();
+    /*leds_on();*/
+    /*_delay_ms(1000);*/
+    /*leds_off();*/
 
     /*nRF24_init();*/
     /*nRF24_TXMode();*/
@@ -26,9 +29,12 @@ int main() {
     /*}*/
     // Loop
     do {
-        if(mpu6050_read(acc_data) != 0){
-            ret = 1;
-        }
+        /*if(mpu6050_read(acc_data) != 0){*/
+        /*ret = 1;*/
+        /*}*/
+        /*if(mpu6050_test_connection() == 0){*/
+        /*ret = 1;*/
+        /*}*/
         /*log.buffer[j++ % sizeof(log)] = 'A';*/
         /*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_MAX_RT){*/
         /**//*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_TX_DS){*/
