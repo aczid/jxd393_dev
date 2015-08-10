@@ -11,8 +11,8 @@
 #define i2c_sclk_lo() (GPIOA->DDR |= 0x02); (GPIOA->ODR = GPIOA->IDR & ~0x02)
 
 // set to input (pull up enabled)
-#define i2c_sda_hi() (GPIOA->ODR = GPIOA->DDR & ~0x04)
-#define i2c_sclk_hi() (GPIOA->ODR = GPIOA->DDR & ~0x02)
+#define i2c_sda_hi() (GPIOA->DDR = GPIOA->DDR & ~0x04)
+#define i2c_sclk_hi() (GPIOA->DDR = GPIOA->DDR & ~0x02)
 
 #define i2c_bit_delay() _delay_us(160)
 
