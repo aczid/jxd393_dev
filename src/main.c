@@ -18,7 +18,7 @@ int main() {
         /*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_MAX_RT){*/
         /**//*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_TX_DS){*/
         leds_toggle();
-        _delay_ms(1000);
+        _delay_us(10000000);
         /**//*for(i = 0; i < 78000; i++){*/
         /**//*}*/
         /*}*/
