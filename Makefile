@@ -6,7 +6,7 @@ SRCDIR = src
 OBJDIR = obj
 
 C_FILES  = $(shell find $(SRCDIR) -name "*.c")
-CFLAGS   = -mstm8 -DSTM8S005
+CFLAGS   = -mstm8 -DSTM8S005 -Wa,-l
 LDFLAGS  = -mstm8 -lstm8 
 OBJECTS  = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(C_FILES))
 FIRMWARE = jxd393_stm8s005k6.ihx
