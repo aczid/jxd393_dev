@@ -4,6 +4,8 @@
 #include "soft_i2c.h"
 #include "delay.h"
 
+// adapted from Wikipedia article on i2c
+
 static uint8_t started;
 
 void soft_i2c_init(void){

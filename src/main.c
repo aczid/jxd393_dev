@@ -26,9 +26,9 @@ int main() {
     /*}*/
     // Loop
     do {
-        /*if(mpu6050_read(log.buffer) != 0){*/
-        /*sprintf(log.buffer, "Error reading MPU6050!\n");*/
-        /*}*/
+        if(mpu6050_read(log.buffer) != 0){
+            sprintf(log.buffer, "Error reading MPU6050!\n");
+        }
         /*log.buffer[j++ % sizeof(log)] = 'A';*/
         /*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_MAX_RT){*/
         /**//*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_TX_DS){*/
