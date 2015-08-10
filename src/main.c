@@ -17,10 +17,9 @@ int main() {
         /*log.buffer[j++] = 'A';*/
         /*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_MAX_RT){*/
         /**//*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_TX_DS){*/
-        /*leds_toggle();*/
+        leds_toggle();
         _delay_ms(1000);
-        /**//*for(i = 0; i < 78000; i++){*/
-        /**//*}*/
+        /*for(i = 0; i < 78000; i++){*/
         /*}*/
     } while(1);
 }
