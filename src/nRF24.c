@@ -12,7 +12,7 @@ uint8_t nRF24_TX_addr[nRF24_TX_ADDR_WIDTH] = {'W','o','l','k','T'};
 // GPIO and SPI initialization
 void nRF24_init() {
     // GND  --> PB1
-    // IRQ  --> NC
+    // IRQ  --> NC(?!)
     // CE   <-- PB2
     // CSN  <-- PC4
     // SCK  <-- PC5
@@ -20,11 +20,8 @@ void nRF24_init() {
     // MISO --> PC7
 
     // SCK,MOSI,CSN,CE pins set as output fiwth push-pull at 10MHz
-    /*PB_DDR |= 0x78; // Set PB3..PB6 as output*/
-    /*PB_CR1 |= 0x78; // Configure PB3..PB6 as output with push-pull*/
-    /*PB_CR2 |= 0x78; // Set 10MHz output speed for PB3..PB6 pins*/
     // Set PB1, PB2 as output
-    // CE
+    // CE, GND
     GPIOB->DDR |= 0x06;
     GPIOB->CR1 |= 0x06;
     GPIOB->CR2 |= 0x06;
@@ -35,27 +32,19 @@ void nRF24_init() {
     GPIOC->CR1 |= 0x70;
     GPIOC->CR2 |= 0x70;
 
-    //PB_CR2 &= ~(0x78); // Set 2MHz output speed for PB3..PB6 pins
-
     // MISO pin set as input with pull-up
-    /*PB_DDR_bit.DDR7 = 0; // Set PB7 as input*/
     // Set PC7 as input
     GPIOC->DDR &= ~0x80;
-    /*PB_CR1_bit.C17  = 1; // Configure PB7 as input with pull-up*/
     // Configure PC7 as input with pull-up
     GPIOC->CR1 |= 0x80;
-    /*PB_CR2_bit.C27  = 0; // Disable external interrupt for PB7*/
     // Disable external interrupt for PC7
     GPIOC->CR2 &= ~0x80;
 
     // IRQ pin set as input with pull-up
-    /*PB_DDR_bit.DDR2 = 0; // Set PB2 as input*/
     // Set PC1 as input
     GPIOB->DDR &= ~0x02;
-    /*PB_CR1_bit.C12  = 1; // Configure PB2 as input with pull-up*/
     // Configure PC1 as input with pull-up
     GPIOB->CR1 |= 0x02;
-    /*PB_CR2_bit.C22  = 0; // Disable external interrupt for PB2*/
     // Disable external interrupt for PC1
     GPIOB->CR2 &= ~0x02;
 

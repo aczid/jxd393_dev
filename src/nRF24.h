@@ -3,14 +3,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*// Chip Enable Activates RX or TX mode*/
-/*#define CE_L() PB_ODR_bit.ODR3 = 0;*/
-/*#define CE_H() PB_ODR_bit.ODR3 = 1;*/
-
-/*// SPI Chip Select*/
-/*#define CSN_L() PB_ODR_bit.ODR4 = 0;*/
-/*#define CSN_H() PB_ODR_bit.ODR4 = 1;*/
-
 // Chip Enable Activates RX or TX mode
 #define CE_L() GPIOB->ODR &= ~0x04;
 #define CE_H() GPIOB->ODR |= 0x04;

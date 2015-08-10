@@ -12,16 +12,12 @@ CFLAGS   = -mstm8 -DSTM8S005 -Wa,-l -I $(SRCDIR) -I $(STM8LIBDIR)
 LDFLAGS  = -mstm8 -lstm8 
 OBJECTS  = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(C_FILES))
 ST_OBJECTS  = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(ST_C_FILES))
-FIRMWARE = jxd393_stm8s005k6.ihx
 
-OPTIONS_BIN = opt.bin
-RAM_BIN = ram.bin
 PROGRAMMER = stlinkv2
 MCU = stm8s005k6
-OPTION_BYTES_START = 0x4800
-OPTION_BYTES_SIZE = 11
-FLASH_START = 0x8000
 FLASHER = stm8flash -c $(PROGRAMMER) -p $(MCU)
+BUILD = jxd393_$(MCU)
+FIRMWARE = $(BUILD).ihx
 
 $(OBJDIR)/%.rel: $(SRCDIR)/%.c
 	@mkdir -p $(shell dirname $@)
@@ -32,28 +28,40 @@ $(OBJDIR)/%.rel: $(SRCDIR)/%.c
 all: $(FIRMWARE)
 
 clean:
-	rm -rf $(OBJECTS) $(FIRMWARE) $(OPTIONS_BIN) $(RAM_BIN)
+	rm -rf $(OBJECTS) $(FIRMWARE) $(BUILD).map $(BUILD).lk
 
 distclean: clean
 	rm -rf $(OBJDIR)
+
+$(FIRMWARE): $(OBJECTS) $(ST_OBJECTS)
+	$(CC) $(ST_OBJECTS) $(OBJECTS) -o $(FIRMWARE) $(LDFLAGS)
+
+flash: $(FIRMWARE)
+	$(FLASHER) -w $(FIRMWARE)
+
+## Debugging / configure options from here
+
+OPTION_BYTES_SIZE = 11
+OPTIONS_BIN = opt.bin
+RAM_BIN = ram.bin
 
 reset_options:
 	echo "Resetting options"
 	perl -e 'print "\x00" . "\x00\xff"x6 . "\xff\x00"' > $(OPTIONS_BIN)
 	stm8flash -c stlinkv2 -p stm8s005k6 -s opt -w $(OPTIONS_BIN) -b 15
+	@rm $(OPTIONS_BIN)
 
 enable_rop:
 	echo "Enabling ROP"
 	perl -e 'print "\xaa" . "\x00\xff"x6 . "\xff\x00"' > $(OPTIONS_BIN)
 	stm8flash -c stlinkv2 -p stm8s005k6 -s opt -w $(OPTIONS_BIN) -b 1
+	@rm $(OPTIONS_BIN)
 
 disable_rop:
 	echo "Disabling ROP"
 	perl -e 'print "\x00"' > $(OPTIONS_BIN)
 	stm8flash -c stlinkv2 -p stm8s005k6 -s opt -w $(OPTIONS_BIN) -b 1 -m
-
-flash: $(FIRMWARE)
-	$(FLASHER) -w $(FIRMWARE)
+	@rm $(OPTIONS_BIN)
 
 read_option_bytes:
 	$(FLASHER) -s opt -b $(OPTION_BYTES_SIZE) -r $(OPTIONS_BIN)
@@ -64,7 +72,3 @@ print_debug_buffer:
 	$(FLASHER) -s ram -r $(RAM_BIN)
 	xxd -s 0x`strings -a -t x ram.bin | grep DBG -A 1 | tail -n1 | cut -d' ' -f7` -l 128 $(RAM_BIN)
 	@rm $(RAM_BIN)
-
-$(FIRMWARE): $(OBJECTS) $(ST_OBJECTS)
-	$(CC) $(ST_OBJECTS) $(OBJECTS) -o $(FIRMWARE) $(LDFLAGS)
-
