@@ -10,6 +10,8 @@ void assert_failed(u8* file, u32 line);
 #define assert_param(expr) ((void)0)
 #endif
 
+#define F_CPU 16000000
+
 #include "stm8s_stdlib/stm8s_gpio.h"
 #include "stm8s_stdlib/stm8s_spi.h"
 
