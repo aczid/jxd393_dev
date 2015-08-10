@@ -17,4 +17,12 @@ void _delay_us(uint32_t d){
     }
 }
 
+void _delay_ms(uint32_t d){
+    int i = 0;
+    // fudged number: adjust for loop accounting
+    for(i = 0; i < d/TICKS_PER_MS/20-1; i++){
+        delay_20_cycles();
+    }
+}
+
 

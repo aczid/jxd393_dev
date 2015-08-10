@@ -5,6 +5,7 @@
 
 void delay_20_cycles(void);
 void _delay_us(uint32_t d);
+void _delay_ms(uint32_t d);
 #define F_CPU 16000000
 #define TICKS_PER_MS (F_CPU/1000)
 #define TICKS_PER_US (TICKS_PER_MS/1000)
