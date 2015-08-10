@@ -14,8 +14,8 @@ int main() {
     // Loop
     do {
         /*nRF24_TXPacket("AAAA", 4);*/
-        if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_MAX_RT){
-            /*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_TX_DS){*/
+        /*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_MAX_RT){*/
+        if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_TX_DS){
             /*debug[j++] = 'A';*/
             leds_toggle();
             /*__asm__("nop");*/
