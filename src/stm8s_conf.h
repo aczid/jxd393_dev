@@ -10,7 +10,7 @@ void assert_failed(u8* file, u32 line);
 #define assert_param(expr) ((void)0)
 #endif
 
-#include "stm8s_gpio.h"
-#include "stm8s_spi.h"
+#include "stm8s_stdlib/stm8s_gpio.h"
+#include "stm8s_stdlib/stm8s_spi.h"
 
 #endif // _STM8S_CONF_H

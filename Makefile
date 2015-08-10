@@ -6,7 +6,7 @@ SRCDIR = src
 OBJDIR = obj
 
 C_FILES  = $(shell find $(SRCDIR) -name "*.c")
-CFLAGS   = -mstm8 -DSTM8S005 -Wa,-l
+CFLAGS   = -mstm8 -DSTM8S005 -Wa,-l -I src -I src/stm8_stdlib
 LDFLAGS  = -mstm8 -lstm8 
 OBJECTS  = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(C_FILES))
 FIRMWARE = jxd393_stm8s005k6.ihx
@@ -52,6 +52,11 @@ read_option_bytes:
 	$(FLASHER) -s opt -b $(OPTION_BYTES_SIZE) -r $(OPTIONS_BIN)
 	@python print_options.py $(OPTIONS_BIN)
 	@rm $(OPTIONS_BIN)
+
+print_debug_buffer:
+	$(FLASHER) -s ram -r ram.bin
+	xxd -s 0x`strings -a -t x ram.bin | grep DBG -A 1 | tail -n1 | cut -d' ' -f7` -l 128 ram.bin 
+	@rm ram.bin
 
 $(FIRMWARE): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $(FIRMWARE) $(LDFLAGS)
