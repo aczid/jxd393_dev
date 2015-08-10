@@ -2,6 +2,7 @@
 #include "nRF24.h"
 #include "stm8s_conf.h"
 #include "debug.h"
+#include "delay.h"
 
 int main() {
     uint32_t i;
@@ -13,10 +14,11 @@ int main() {
     nRF24_TXMode();
     // Loop
     do {
-        log.buffer[j++] = 'A';
+        /*log.buffer[j++] = 'A';*/
         /*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_MAX_RT){*/
         /**//*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_TX_DS){*/
-        /**//*leds_toggle();*/
+        leds_toggle();
+        _delay_us(10000000);
         /**//*for(i = 0; i < 78000; i++){*/
         /**//*}*/
         /*}*/
