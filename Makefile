@@ -7,7 +7,7 @@ OBJDIR = obj
 STM8LIBDIR = $(SRCDIR)/stm8s_stdlib
 
 C_FILES  = $(shell find $(SRCDIR) -name "*.c" \! -path "$(STM8LIBDIR)*")
-ST_C_FILES  = $(shell find $(SRCDIR) -name "*.c" -path "$(STM8LIBDIR)*")
+ST_C_FILES  = $(shell find $(STM8LIBDIR) -name "*.c")
 CFLAGS   = -mstm8 -DSTM8S005 -Wa,-l -I $(SRCDIR) -I $(STM8LIBDIR)
 LDFLAGS  = -mstm8 -lstm8 
 OBJECTS  = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(C_FILES))
