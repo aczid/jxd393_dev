@@ -33,9 +33,9 @@ void soft_i2c_start(void){
     if(started){
         soft_i2c_read_sda();
         i2c_bit_delay();
-        /*while(soft_i2c_read_sclk() == 0){*/
-        /*// add timeout*/
-        /*}*/
+        while(soft_i2c_read_sclk() == 0){
+            // add timeout
+        }
         i2c_bit_delay();
     }
     if(soft_i2c_read_sda() == 0){
@@ -51,9 +51,9 @@ void soft_i2c_start(void){
 void soft_i2c_stop(void){
     i2c_sda_lo();
     i2c_bit_delay();
-    /*while(soft_i2c_read_sclk() == 0){*/
-    /*// add timeout*/
-    /*}*/
+    while(soft_i2c_read_sclk() == 0){
+        // add timeout
+    }
     i2c_bit_delay();
     if(soft_i2c_read_sda() == 0){
         // arbitration lost
@@ -70,9 +70,9 @@ void soft_i2c_writebit(uint8_t bit){
         i2c_sda_lo();
     }
     i2c_bit_delay();
-    /*while(soft_i2c_read_sclk() == 0){*/
-    /*// add timeout*/
-    /*}*/
+    while(soft_i2c_read_sclk() == 0){
+        // add timeout
+    }
     if(bit && soft_i2c_read_sda() == 0){
         // arbitration lost
         return;
@@ -85,9 +85,9 @@ uint8_t soft_i2c_readbit(void){
     uint8_t bit;
     soft_i2c_read_sda();
     i2c_bit_delay();
-    /*while(soft_i2c_read_sclk() == 0){*/
-    /*// add timeout*/
-    /*}*/
+    while(soft_i2c_read_sclk() == 0){
+        // add timeout
+    }
 
     bit = soft_i2c_read_sda();
     i2c_bit_delay();

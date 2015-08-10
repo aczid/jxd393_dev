@@ -25,7 +25,6 @@ int8_t mpu6050_init(void){
 int8_t mpu6050_read(uint8_t *buf){
     uint8_t i;
     uint8_t ret = 0;
-    soft_i2c_start();
     ret = soft_i2c_transmit(0x68);
     if(ret != 0){
         return -1;
@@ -34,6 +33,8 @@ int8_t mpu6050_read(uint8_t *buf){
     if(ret != 0){
         return -1;
     }
+    soft_i2c_stop();
+
     ret = soft_i2c_request(0x68);
     if(ret != 0){
         return -1;
@@ -45,5 +46,6 @@ int8_t mpu6050_read(uint8_t *buf){
     if(ret != 0){
         return -1;
     }
+    soft_i2c_stop();
     return 0;
 }

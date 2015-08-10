@@ -12,7 +12,7 @@
 int main() {
     /*uint32_t i;*/
     uint8_t j = 0;
-    /*uint8_t acc_data[14];*/
+    uint8_t acc_data[14];
 	// Configure pins
     int8_t ret;
     ret = mpu6050_init();
@@ -26,8 +26,8 @@ int main() {
     /*}*/
     // Loop
     do {
-        if(mpu6050_read(log.buffer) != 0){
-            sprintf(log.buffer, "Error reading MPU6050!\n");
+        if(mpu6050_read(acc_data) != 0){
+            ret = 1;
         }
         /*log.buffer[j++ % sizeof(log)] = 'A';*/
         /*if(nRF24_TXPacket("AAAA", 4) == nRF24_MASK_MAX_RT){*/
