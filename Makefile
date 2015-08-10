@@ -4,14 +4,18 @@ LD = sdld
 
 SRCDIR = src
 OBJDIR = obj
+STM8LIBDIR = $(SRCDIR)/stm8s_stdlib
 
-C_FILES  = $(shell find $(SRCDIR) -name "*.c")
-CFLAGS   = -mstm8 -DSTM8S005 -Wa,-l -I src -I src/stm8_stdlib
+C_FILES  = $(shell find $(SRCDIR) -name "*.c" \! -path "$(STM8LIBDIR)*")
+ST_C_FILES  = $(shell find $(SRCDIR) -name "*.c" -path "$(STM8LIBDIR)*")
+CFLAGS   = -mstm8 -DSTM8S005 -Wa,-l -I $(SRCDIR) -I $(STM8LIBDIR)
 LDFLAGS  = -mstm8 -lstm8 
 OBJECTS  = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(C_FILES))
+ST_OBJECTS  = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.rel, $(ST_C_FILES))
 FIRMWARE = jxd393_stm8s005k6.ihx
 
 OPTIONS_BIN = opt.bin
+RAM_BIN = ram.bin
 PROGRAMMER = stlinkv2
 MCU = stm8s005k6
 OPTION_BYTES_START = 0x4800
@@ -28,7 +32,10 @@ $(OBJDIR)/%.rel: $(SRCDIR)/%.c
 all: $(FIRMWARE)
 
 clean:
-	rm -rf $(OBJDIR) $(FIRMWARE) $(OPTIONS_BIN)
+	rm -rf $(OBJECTS) $(FIRMWARE) $(OPTIONS_BIN) $(RAM_BIN)
+
+distclean: clean
+	rm -rf $(OBJDIR)
 
 reset_options:
 	echo "Resetting options"
@@ -54,10 +61,10 @@ read_option_bytes:
 	@rm $(OPTIONS_BIN)
 
 print_debug_buffer:
-	$(FLASHER) -s ram -r ram.bin
-	xxd -s 0x`strings -a -t x ram.bin | grep DBG -A 1 | tail -n1 | cut -d' ' -f7` -l 128 ram.bin 
-	@rm ram.bin
+	$(FLASHER) -s ram -r $(RAM_BIN)
+	xxd -s 0x`strings -a -t x ram.bin | grep DBG -A 1 | tail -n1 | cut -d' ' -f7` -l 128 $(RAM_BIN)
+	@rm $(RAM_BIN)
 
-$(FIRMWARE): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $(FIRMWARE) $(LDFLAGS)
+$(FIRMWARE): $(OBJECTS) $(ST_OBJECTS)
+	$(CC) $(ST_OBJECTS) $(OBJECTS) -o $(FIRMWARE) $(LDFLAGS)
 
